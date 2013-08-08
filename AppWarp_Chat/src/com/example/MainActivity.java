@@ -26,12 +26,7 @@ import com.shephertz.app42.gaming.multiplayer.client.listener.RoomRequestListene
 public class MainActivity extends Activity implements ConnectionRequestListener, RoomRequestListener{
 
 	
-	
-	
-	private Button connectToAppwarp;
 	private EditText nameEditText;
-	private TextView descText;
-	
 	private WarpClient theClient;
 	private ProgressDialog progressDialog;
     private Handler handler = new Handler();
@@ -41,8 +36,6 @@ public class MainActivity extends Activity implements ConnectionRequestListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		connectToAppwarp = (Button)findViewById(R.id.connect);
-		descText = (TextView)findViewById(R.id.descText);
 		nameEditText = (EditText)findViewById(R.id.editTextName);
 		init();
 		
@@ -89,37 +82,39 @@ public class MainActivity extends Activity implements ConnectionRequestListener,
 	}
 	@Override
 	public void onConnectDone(final ConnectEvent event) {
-		progressDialog.dismiss();
-		if(event.getResult() == WarpResponseResultCode.SUCCESS){
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(MainActivity.this, "connection success", Toast.LENGTH_SHORT).show();
-					startApp();
-				}
-			});
-		}else if(event.getResult() == WarpResponseResultCode.CONNECTION_ERROR_RECOVERABLE){// Recoverable Error
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(MainActivity.this, "Connection Recovering..", Toast.LENGTH_SHORT).show(); 
-				}
-			});
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					theClient.RecoverConnection();
-				}
-			}, 5000);
-		}else {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(MainActivity.this, "connection failed "+event.getResult(), Toast.LENGTH_SHORT).show(); 
-				}
-			});
-		}
-		
+		handler.post(new Runnable() {
+        @Override
+        public void run() {
+            progressDialog.dismiss();
+            if(event.getResult() == WarpResponseResultCode.SUCCESS){
+                Toast.makeText(MainActivity.this, "Connection success", Toast.LENGTH_SHORT).show();
+                startApp();
+            }
+            else if(event.getResult() == WarpResponseResultCode.SUCCESS_RECOVERED){
+                Toast.makeText(MainActivity.this, "Connection recovered", Toast.LENGTH_SHORT).show();
+            }
+            else if(event.getResult() == WarpResponseResultCode.CONNECTION_ERROR_RECOVERABLE){
+                Toast.makeText(MainActivity.this, "Recoverable connection error. Recovering session in 5 seconds", Toast.LENGTH_SHORT).show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {                                          
+                        progressDialog = ProgressDialog.show(MainActivity.this, "", "Recovering...");
+                        theClient.RecoverConnection();
+                    }
+                }, 5000);
+            }
+            else{
+                Toast.makeText(MainActivity.this, "non-recoverable connection error. Reconnecting in 5 seconds", Toast.LENGTH_SHORT).show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog = ProgressDialog.show(MainActivity.this, "", "Reconnecting...");
+                        theClient.connectWithUserName(Utils.USER_NAME);
+                    }
+                }, 5000);
+            }
+        }
+    });	
 	}
 	@Override
 	public void onDisconnectDone(final ConnectEvent event) {

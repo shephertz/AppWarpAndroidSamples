@@ -72,11 +72,10 @@ public class ChatActivity extends Activity implements RoomRequestListener, Notif
 	public void onDestroy(){
 		super.onDestroy();
 		if(theClient!=null){
-			theClient.unsubscribeRoom(roomId);
-			theClient.leaveRoom(roomId);
 			theClient.removeConnectionRequestListener(this);
 			theClient.removeRoomRequestListener(this);
 			theClient.removeNotificationListener(this);
+			theClient.disconnect();
 		}
 	}
 	public void onSendClicked(View view){
@@ -282,29 +281,33 @@ public class ChatActivity extends Activity implements RoomRequestListener, Notif
 		
 	}
 	@Override
-	public void onConnectDone(ConnectEvent event) {
-		if(event.getResult() == WarpResponseResultCode.CONNECTION_ERROR_RECOVERABLE){// Recoverable Error
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(ChatActivity.this, "Connection Recovering..", Toast.LENGTH_SHORT).show(); 
-				}
-			});
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					theClient.RecoverConnection();
-				}
-			}, 5000);
-		}else {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(ChatActivity.this, "disconnected", Toast.LENGTH_SHORT).show(); 
-				}
-			});
-		}
-		
+	public void onConnectDone(final ConnectEvent event) {
+		handler.post(new Runnable() {
+        @Override
+        public void run() {
+            progressDialog.dismiss();
+            if(event.getResult() == WarpResponseResultCode.SUCCESS){
+                Toast.makeText(ChatActivity.this, "Connection success", Toast.LENGTH_SHORT).show();
+            }
+            else if(event.getResult() == WarpResponseResultCode.SUCCESS_RECOVERED){
+                Toast.makeText(ChatActivity.this, "Connection recovered", Toast.LENGTH_SHORT).show();
+            }
+            else if(event.getResult() == WarpResponseResultCode.CONNECTION_ERROR_RECOVERABLE){
+                Toast.makeText(ChatActivity.this, "Recoverable connection error. Recovering session in 5 seconds", Toast.LENGTH_SHORT).show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {                                          
+                        progressDialog = ProgressDialog.show(ChatActivity.this, "", "Recovering...");
+                        theClient.RecoverConnection();
+                    }
+                }, 5000);
+            }
+            else{
+                Toast.makeText(ChatActivity.this, "non-recoverable connection error. Reconnecting in 5 seconds", Toast.LENGTH_SHORT).show();
+                ChatActivity.this.finish();
+            }
+        }
+    });	
 	}
 	@Override
 	public void onDisconnectDone(ConnectEvent arg0) {
