@@ -42,12 +42,27 @@ public class MainActivity extends Activity implements ConnectionRequestListener,
 	}
 	
 	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-		if(theClient!=null){
-			theClient.removeConnectionRequestListener(this);
-			theClient.disconnect();
-		}
+	public void onStop(){
+	    super.onStop();
+        if(theClient!=null){
+            theClient.removeConnectionRequestListener(this);
+            theClient.removeRoomRequestListener(this);
+        }
+	}
+	
+	@Override 
+	public void onDestroy(){
+	    super.onDestroy();
+	    theClient.disconnect();
+	}
+	
+	@Override
+	public void onStart(){
+	    super.onStart();
+        if(theClient!=null){
+            theClient.addConnectionRequestListener(this);
+            theClient.addRoomRequestListener(this);
+        }	    
 	}
 	
 	public void onConnectClicked(View view){
@@ -66,7 +81,6 @@ public class MainActivity extends Activity implements ConnectionRequestListener,
 	public void startApp(){
 		Hashtable<String, Object> propertiesToMatch = new Hashtable<String, Object>();
 		propertiesToMatch.put("topic", "sports");
-		theClient.addRoomRequestListener(this);
 		theClient.joinRoomWithProperties(propertiesToMatch);
 		
 	}
@@ -77,9 +91,9 @@ public class MainActivity extends Activity implements ConnectionRequestListener,
             theClient = WarpClient.getInstance();
         } catch (Exception ex) {
             Toast.makeText(this, "Exception in Initilization", Toast.LENGTH_LONG).show();
-        }
-        
+        }  
 	}
+	
 	@Override
 	public void onConnectDone(final ConnectEvent event) {
 		handler.post(new Runnable() {
@@ -129,8 +143,7 @@ public class MainActivity extends Activity implements ConnectionRequestListener,
 
 	@Override
 	public void onJoinRoomDone(RoomEvent event) {
-		if(event.getResult()==0){
-			theClient.removeRoomRequestListener(this);
+		if(event.getResult() == WarpResponseResultCode.SUCCESS){			
 			Intent intent = new Intent(this, ChatActivity.class);
 			intent.putExtra("roomId", event.getData().getId());
 			startActivity(intent);

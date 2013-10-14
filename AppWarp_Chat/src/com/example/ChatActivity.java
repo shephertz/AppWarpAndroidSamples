@@ -303,7 +303,7 @@ public class ChatActivity extends Activity implements RoomRequestListener, Notif
                 }, 5000);
             }
             else{
-                Toast.makeText(ChatActivity.this, "non-recoverable connection error. Reconnecting in 5 seconds", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, "non-recoverable connection error. Please connect again", Toast.LENGTH_SHORT).show();
                 ChatActivity.this.finish();
             }
         }
