@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;
@@ -25,6 +26,7 @@ public class RoomlistActivity extends Activity implements ZoneRequestListener, R
 	
 	private WarpClient theClient;
 	private RoomlistAdapter roomlistAdapter;
+	private TextView textViewRoomSearch;
 	private ListView listView;
 	private ProgressDialog progressDialog;
 	
@@ -33,6 +35,7 @@ public class RoomlistActivity extends Activity implements ZoneRequestListener, R
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.room_list);
 		listView = (ListView)findViewById(R.id.roomList);
+		textViewRoomSearch = (TextView)findViewById(R.id.textViewRoomSearch);
 		roomlistAdapter = new RoomlistAdapter(this);
 		init();
 		
@@ -118,9 +121,11 @@ public class RoomlistActivity extends Activity implements ZoneRequestListener, R
 			public void run() {
 				RoomData[] roomDataList = event.getRoomsData();
 				if(roomDataList.length>0){
+					textViewRoomSearch.setText("Please select any room.");
 					roomlistAdapter.setData(roomDataList);
 					listView.setAdapter(roomlistAdapter);
 				}else{
+					textViewRoomSearch.setText("No room found.");
 					roomlistAdapter.clear();
 				}
 			}
