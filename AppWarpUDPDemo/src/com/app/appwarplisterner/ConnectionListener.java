@@ -26,7 +26,7 @@ public class ConnectionListener implements ConnectionRequestListener {
 				if (event.getResult() == WarpResponseResultCode.SUCCESS) {
 					container.goToRoomList();
 				} else {
-					Utils.showToastAlert(container.getApplicationContext(), "Connection Failed");
+					Utils.showToastAlert(container.getApplicationContext(), "Connection Failed: "+event.getResult());
 				}
 			}
 		});

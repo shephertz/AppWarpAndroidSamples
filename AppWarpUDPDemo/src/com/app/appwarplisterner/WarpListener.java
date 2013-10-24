@@ -1,5 +1,6 @@
 package com.app.appwarplisterner;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import android.util.Log;
@@ -74,12 +75,26 @@ public class WarpListener implements RoomRequestListener, NotifyListener{
 			}
 		}
 	}
-
+	
 	@Override
-	public void onUserChangeRoomProperty(RoomData roomData, String userName, Hashtable<String, Object> tableProperties, Hashtable<String, String> lockProperties) {
+	public void onGameStarted(String arg0, String arg1, String arg2) {
+		
 		
 	}
 
+	@Override
+	public void onGameStopped(String arg0, String arg1) {
+		
+		
+	}
+
+	@Override
+	public void onUserChangeRoomProperty(RoomData arg0, String arg1,
+			HashMap<String, Object> arg2, HashMap<String, String> arg3) {
+		
+		
+	}
+	
 	@Override
 	public void onUserJoinedLobby(LobbyData arg0, String arg1) {
 		
@@ -187,6 +202,8 @@ public class WarpListener implements RoomRequestListener, NotifyListener{
 		
 		
 	}
+
+	
 
 	
 
