@@ -1,6 +1,7 @@
 package appwarp.example;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -250,10 +251,7 @@ public class ChatActivity extends Activity implements RoomRequestListener, Notif
 		
 	}
 	
-	@Override
-	public void onUserChangeRoomProperty(RoomData arg0, String arg1, Hashtable<String, Object> arg2, Hashtable<String, String> arg3) {
-		
-	}
+	
 	
 	@Override
 	public void onUserPaused(String locid, boolean isLobby, String userName) {
@@ -367,5 +365,25 @@ public class ChatActivity extends Activity implements RoomRequestListener, Notif
 			}
 		});
 	}
+
+	@Override
+	public void onGameStarted(String arg0, String arg1, String arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onGameStopped(String arg0, String arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onUserChangeRoomProperty(RoomData arg0, String arg1,
+			HashMap<String, Object> arg2, HashMap<String, String> arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }
