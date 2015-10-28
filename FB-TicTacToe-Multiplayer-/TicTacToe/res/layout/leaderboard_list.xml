@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C9FEFF"
+    android:gravity="right"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/user_list_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="37dp"
+            android:onClick="onFriendsClicked"
+            android:text="Friends" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="44dp"
+            android:onClick="onGlobalClicked"
+            android:text="Global" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/users_list"
+        android:layout_width="match_parent"
+        android:layout_height="407dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp" >
+
+    </ListView>
+
+</LinearLayout>

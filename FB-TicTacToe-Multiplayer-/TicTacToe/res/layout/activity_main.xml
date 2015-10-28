@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A9E2F3"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="onZeroClicked"
+        android:src="@drawable/button_ai" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:onClick="onExitClicked"
+        android:src="@drawable/button_exit" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button3"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_marginBottom="42dp"
+        android:onClick="onLeaderBoardClicked"
+        android:text="LeaderBoard" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:onClick="onPlayGameClicked"
+        android:text="Play Game" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:onClick="onMultiplayerClicked"
+        android:text="Multiplayer" />
+
+</RelativeLayout>
