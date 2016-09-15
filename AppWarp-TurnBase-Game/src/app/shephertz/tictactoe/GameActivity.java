@@ -57,6 +57,7 @@ public class GameActivity extends Activity {
 		int idClicked=selectedButton.getId();
 	   int cellIndex = getCellIndexFromView(idClicked);		
 	if(cellIndex>=0&&isGameStarted && isUserTurn){
+		isUserTurn=false;
 		int indexI=cellIndex/3;
 		int indexJ=cellIndex%3;
 		updateGameAndUI(indexI,indexJ);
