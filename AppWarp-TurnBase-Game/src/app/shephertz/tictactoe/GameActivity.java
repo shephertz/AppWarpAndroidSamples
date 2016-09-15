@@ -269,17 +269,7 @@ public class GameActivity extends Activity {
 		  }
 		  }
 		}
-	public void validateMoveHistory(final String moveData, final String sender, final String nextTurn){
-		if(moveData.length()>0){
-			final int i = Integer.parseInt(moveData.substring(0,moveData.indexOf('#')));
-			final int j = Integer.parseInt(moveData.substring(moveData.indexOf('#')+1, moveData.indexOf('/')));
-			if(ARRAY[i][j] == '-' ){
-				System.out.println(""+sender+"--"+nextTurn);
-				onMoveCompleted(moveData, sender, nextTurn);
-				
-			}
-		}
-	}
+	
 
 	public void onEnemyLeft(){
 		if(isGameStarted){
@@ -292,5 +282,15 @@ public class GameActivity extends Activity {
 		}
 	}
 
-	
+	public void validateMoveHistory(final String moveData, final String sender, final String nextTurn){
+		if(moveData.length()>0){
+			final int i = Integer.parseInt(moveData.substring(0,moveData.indexOf('#')));
+			final int j = Integer.parseInt(moveData.substring(moveData.indexOf('#')+1, moveData.indexOf('/')));
+			if(ARRAY[i][j] == '-' ){
+				System.out.println(""+sender+"--"+nextTurn);
+				onMoveCompleted(moveData, sender, nextTurn);
+				
+			}
+		}
+	}
 }
