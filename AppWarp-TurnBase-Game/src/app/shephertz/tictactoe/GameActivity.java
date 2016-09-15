@@ -64,31 +64,7 @@ public class GameActivity extends Activity {
 		}
 	}
 	
-	private int getCellIndexFromView(int viewId )
-	{
-		switch (viewId)
-		{
-		case R.id.cell_00 :
-			return 0;
-		case R.id.cell_01 :
-			return 1;
-		case R.id.cell_02 :
-			return 2;
-		case R.id.cell_10 :
-			return 3;
-		case R.id.cell_11 :
-			return 4;
-		case R.id.cell_12 :
-			return 5;
-		case R.id.cell_20 :
-			return 6;
-		case R.id.cell_21 :
-			return 7;
-		case R.id.cell_22 :
-			return 8;			
-		}
-		return -1;
-	}
+	
 	private int getImageId(int i,int j )
 	{
 		int index=i*3+j;
@@ -112,6 +88,32 @@ public class GameActivity extends Activity {
 			return R.id.cell_21;
 		case 8:
 			return R.id.cell_22 ;			
+		}
+		return -1;
+	}
+	
+	private int getCellIndexFromView(int viewId )
+	{
+		switch (viewId)
+		{
+		case R.id.cell_00 :
+			return 0;
+		case R.id.cell_01 :
+			return 1;
+		case R.id.cell_02 :
+			return 2;
+		case R.id.cell_10 :
+			return 3;
+		case R.id.cell_11 :
+			return 4;
+		case R.id.cell_12 :
+			return 5;
+		case R.id.cell_20 :
+			return 6;
+		case R.id.cell_21 :
+			return 7;
+		case R.id.cell_22 :
+			return 8;			
 		}
 		return -1;
 	}
@@ -254,6 +256,19 @@ public class GameActivity extends Activity {
 		});
 		
 	}
+	private void updateUI(int i, int j, char type){ 
+		  ARRAY[i][j] = type;
+		  int imageId=getImageId(i, j);
+		  if(imageId!=-1){
+		  ImageButton imge=(ImageButton) findViewById(imageId);
+		  if( type == '0' ) {
+			  imge.setImageResource(R.drawable.circle_cell);
+			  
+		  }else if ( type == 'X' ){
+			  imge.setImageResource(R.drawable.cross_cell);
+		  }
+		  }
+		}
 	public void validateMoveHistory(final String moveData, final String sender, final String nextTurn){
 		if(moveData.length()>0){
 			final int i = Integer.parseInt(moveData.substring(0,moveData.indexOf('#')));
